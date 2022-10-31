@@ -1,4 +1,4 @@
-FROM openjdk:17
+FROM openjdk:18
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 RUN ./mvnw dependency:go-offline
