@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://192.168.1.21:8081/api',
+  apiUrl: 'http://kinikun.ddns.net:8081/api',
   keycloak: {
-    authUrl: 'http://192.168.1.21:8080/auth',
+    authUrl: 'http://kinikun.ddns.net:8080/auth',
     realm: 'Bernadet',
     client: 'front'
   }
