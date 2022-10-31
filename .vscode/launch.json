@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BernadetApplication<bernadet>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "fr.family.bernadet.BernadetApplication",
+            "projectName": "bernadet",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

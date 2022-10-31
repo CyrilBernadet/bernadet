@@ -1,0 +1,102 @@
+$enveloppe-color: #81d4fa;
+$enveloppe-width: 440px;
+$enveloppe-height: 240px;
+
+body {
+    background: #f7f7f7;
+}
+
+.envelope {
+    width: $enveloppe-width;
+    height: $enveloppe-height;
+    margin: 20rem auto;
+    position: relative;
+    background: darken($enveloppe-color, 50%);
+    cursor: pointer;
+    box-shadow: 0px 4px 6px -3px #989898;
+}
+
+.top,
+.bottom {
+    border-left: $enveloppe-width/2 solid transparent;
+    border-right: $enveloppe-width/2 solid transparent;
+    position: relative;
+}
+
+.top {
+    border-bottom: 2/3 * $enveloppe-height solid darken($enveloppe-color, 15%);
+    top: -2/3 * $enveloppe-height;
+    transform-origin: bottom;
+    z-index: 3;
+    transition: all .8s ease;
+    transform: rotateX(0deg);
+}
+
+.bottom {
+    border-bottom: 2/3 * $enveloppe-height solid $enveloppe-color;
+    top: -1/3 * $enveloppe-height;
+    z-index: 4;
+}
+
+.left,
+.right {
+    width: 0;
+    height: 0;
+    border-top: 1/2 * $enveloppe-height solid transparent;
+    border-bottom: 1/2 * $enveloppe-height solid transparent;
+    top: 0;
+    z-index: 4;
+}
+
+.left {
+    border-left: $enveloppe-width/2 solid darken($enveloppe-color, 30%);
+    position: absolute;
+    left: 0;
+}
+
+.right {
+    border-right: $enveloppe-width/2 solid darken($enveloppe-color, 30%);
+    position: absolute;
+    right: 0;
+}
+
+.back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: all 1s ease;
+    z-index: 3;
+    transition-delay: 0.4s;
+    top: -35%;
+}
+
+.paper {
+    width: 90%;
+    height: 90%;
+    font-size: 4rem;
+    text-align: center;
+    background: #f6f8e7;
+    margin: 6px auto 0;
+    box-shadow: 0px 0px 2px 0px #909090;
+    transition: all 0.5s ease-out;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.envelope.fold .back {
+    z-index: 3;
+    transition-delay: 0.3s;
+    top: 0;
+}
+
+.envelope.fold .top {
+    transition-delay: .6s;
+    transform: rotateX(180deg);
+    z-index: 6;
+}

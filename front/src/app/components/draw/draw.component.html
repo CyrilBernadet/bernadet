@@ -1,0 +1,11 @@
+<div *ngIf="!isLoading">
+    <div class="envelope" [class]="isInside ? 'fold' : ''" (click)="toggle()">
+        <div class="top"></div>
+        <div class="left"></div>
+        <div class="back">
+            <div class="paper">{{ drawnName }}</div>
+        </div>
+        <div class="right"></div>
+        <div class="bottom"></div>
+    </div>
+</div>
