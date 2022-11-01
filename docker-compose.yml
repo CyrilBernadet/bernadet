@@ -31,7 +31,7 @@ services:
   keycloak:
       image: quay.io/keycloak/keycloak:legacy
       volumes:
-        - keys:/opt/keycloak/conf
+        - ./keys:/opt/keycloak/conf
       env_file:
         ./keycloak.env
       ports:
