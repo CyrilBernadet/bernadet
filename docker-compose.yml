@@ -6,8 +6,6 @@ services:
   back:
     container_name: back
     build: ./back
-    volumes:
-      - ./keys:$JAVA_HOME/lib/security/cacerts
     ports:
       - '8081:8081'
     env_file:
