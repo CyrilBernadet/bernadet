@@ -30,6 +30,9 @@ services:
       - 5432:5432
   keycloak:
       image: quay.io/keycloak/keycloak:legacy
+      volumes:
+        - $PWD/server.crt.pem:/opt/keycloak/conf/server.crt.pem
+        - $PWD/server.key.pem:/opt/keycloak/conf/server.key.pem
       env_file:
         ./keycloak.env
       ports:
