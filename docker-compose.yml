@@ -11,6 +11,8 @@ services:
       - '8081:8081'
     env_file:
       ./backend.env
+    volumes:
+      - ./keys:/usr/java/openjdk-18/jre/lib/security/cacerts
     depends_on:
       - postgres
       - keycloak

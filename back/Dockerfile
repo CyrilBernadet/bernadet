@@ -1,9 +1,5 @@
 FROM openjdk:18
-
-COPY ../keys/server.crt.pem /usr/java/openjdk-18/jre/lib/security
-RUN \
-    cd /usr/java/openjdk-18/jre/lib/security \
-    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias keycloakcert -file server.crt.pem
+EXPOSE 8081
 
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
