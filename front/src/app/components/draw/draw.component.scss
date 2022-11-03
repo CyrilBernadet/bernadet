@@ -18,8 +18,8 @@ body {
 
 .top,
 .bottom {
-    border-left: $enveloppe-width/2 solid transparent;
-    border-right: $enveloppe-width/2 solid transparent;
+    border-left: math.div($enveloppe-width, 2) solid transparent;
+    border-right: math.div($enveloppe-width, 2) solid transparent;
     position: relative;
 }
 
