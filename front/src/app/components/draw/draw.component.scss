@@ -24,8 +24,8 @@ body {
 }
 
 .top {
-    border-bottom: 2/3 * $enveloppe-height solid darken($enveloppe-color, 15%);
-    top: -2/3 * $enveloppe-height;
+    border-bottom: math.div(2, 3) * $enveloppe-height solid darken($enveloppe-color, 15%);
+    top: math.div(-2, 3) * $enveloppe-height;
     transform-origin: bottom;
     z-index: 3;
     transition: all .8s ease;
@@ -33,8 +33,8 @@ body {
 }
 
 .bottom {
-    border-bottom: 2/3 * $enveloppe-height solid $enveloppe-color;
-    top: -1/3 * $enveloppe-height;
+    border-bottom: math.div(2, 3) * $enveloppe-height solid $enveloppe-color;
+    top: math.div(-1, 3) * $enveloppe-height;
     z-index: 4;
 }
 
@@ -42,20 +42,20 @@ body {
 .right {
     width: 0;
     height: 0;
-    border-top: 1/2 * $enveloppe-height solid transparent;
-    border-bottom: 1/2 * $enveloppe-height solid transparent;
+    border-top: math.div(1, 2) * $enveloppe-height solid transparent;
+    border-bottom: math.div(1, 2) * $enveloppe-height solid transparent;
     top: 0;
     z-index: 4;
 }
 
 .left {
-    border-left: $enveloppe-width/2 solid darken($enveloppe-color, 30%);
+    border-left: math.div($enveloppe-width, 2) solid darken($enveloppe-color, 30%);
     position: absolute;
     left: 0;
 }
 
 .right {
-    border-right: $enveloppe-width/2 solid darken($enveloppe-color, 30%);
+    border-right: math.div($enveloppe-width, 2) solid darken($enveloppe-color, 30%);
     position: absolute;
     right: 0;
 }
