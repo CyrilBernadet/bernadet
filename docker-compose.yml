@@ -2,6 +2,18 @@ version: '3'
 volumes:
   postgres_data:
       driver: local
+  fullchain:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem
+  privkey:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem
 services:
   back:
     container_name: back
@@ -47,12 +59,3 @@ services:
       - 8443:8443
     depends_on:
       - postgres
-  volumes:
-    fullchain:
-      driver: local
-      driver_opts:
-        device: /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem
-    privkey:
-      driver: local
-      driver_opts:
-        device: /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem
