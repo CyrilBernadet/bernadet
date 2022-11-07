@@ -69,10 +69,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "front:build:production",
-              "ssl": true,
-              "sslCert": "/etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem",
-              "sslKey": "/etc/letsencrypt/live/bernadet.ddns.net/privkey.pem"
+              "browserTarget": "front:build:production"
             },
             "development": {
               "browserTarget": "front:build:development"
