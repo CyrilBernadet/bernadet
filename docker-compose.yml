@@ -51,12 +51,8 @@ services:
     fullchain:
       driver: local
       driver_opts:
-        o: bind
-        type: none
         device: /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem
     privkey:
       driver: local
       driver_opts:
-        o: bind
-        type: none
         device: /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem
