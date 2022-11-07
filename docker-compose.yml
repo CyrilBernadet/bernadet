@@ -13,9 +13,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    depends_on:
-      compare-it-front:
-        condition: service_healthy
   back:
     container_name: back
     hostname: backend
