@@ -5,6 +5,8 @@ volumes:
   letsencrypt:
     driver: local
     driver_opts:
+      o: bind
+      type: none
       device: /etc/letsencrypt
 services:
   back:
