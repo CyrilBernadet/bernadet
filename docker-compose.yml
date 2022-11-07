@@ -7,7 +7,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /etc/letsencrypt/live
+      device: /etc/letsencrypt
 services:
   back:
     container_name: back
@@ -24,7 +24,7 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - keys:/etc/letsencrypt/live:ro
+      - keys:/etc/letsencrypt:ro
     ports:
       - 80:80
       - 443:443
@@ -42,7 +42,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
-      - keys:/etc/letsencrypt/live:ro
+      - keys:/etc/letsencrypt:ro
     env_file:
       ./keycloak.env
     ports:
