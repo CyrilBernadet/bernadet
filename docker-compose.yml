@@ -2,12 +2,6 @@ version: '3'
 volumes:
   postgres_data:
       driver: local
-  letsencrypt:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /etc/letsencrypt
 services:
   back:
     container_name: back
@@ -24,7 +18,7 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - letsencrypt:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
       - 443:443
@@ -43,7 +37,7 @@ services:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
     volumes:
-      - letsencrypt:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
     env_file:
       ./keycloak.env
     ports:
