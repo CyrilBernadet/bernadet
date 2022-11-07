@@ -11,8 +11,6 @@ services:
       - '8081:8081'
     env_file:
       ./backend.env
-    volumes:
-      - ./keys:/usr/java/openjdk-18/jre/lib/security/cacerts
     depends_on:
       - postgres
       - keycloak
@@ -26,6 +24,8 @@ services:
     hostname: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:/etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem
+      - /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:/etc/letsencrypt/live/bernadet.ddns.net/privkey.pem
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
