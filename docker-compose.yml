@@ -17,6 +17,9 @@ services:
   front:
     container_name: front
     build: ./front
+    volumes:
+      - /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:/etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:ro
+      - /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:/etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:ro
     ports:
       - 80:80
       - 443:443
@@ -25,8 +28,6 @@ services:
     hostname: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:/etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem
-      - /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:/etc/letsencrypt/live/bernadet.ddns.net/privkey.pem
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
