@@ -2,18 +2,12 @@ version: '3'
 volumes:
   postgres_data:
       driver: local
-  fullchain:
+  keys:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem
-  privkey:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem
+      device: /etc/letsencrypt/live
 services:
   back:
     container_name: back
@@ -30,8 +24,7 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - fullchain:/etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:ro
-      - privkey:/etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:ro
+      - keys:/etc/letsencrypt/live:ro
     ports:
       - 80:80
       - 443:443
@@ -49,9 +42,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
-    volumes:
-      - fullchain:/etc/x509/https/tls.crt
-      - privkey:/etc/x509/https/tls.key
+      - keys:/etc/letsencrypt/live:ro
     env_file:
       ./keycloak.env
     ports:
