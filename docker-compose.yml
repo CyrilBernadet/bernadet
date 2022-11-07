@@ -18,7 +18,8 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - /etc/letsencrypt/live/bernadet.ddns.net:/etc/letsencrypt/live/bernadet.ddns.net:ro
+      - fullchain:/etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:ro
+      - privkey:/etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:ro
     ports:
       - 80:80
       - 443:443
@@ -37,8 +38,8 @@ services:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
     volumes:
-      - /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:/etc/x509/https/tls.crt
-      - /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:/etc/x509/https/tls.key
+      - fullchain:/etc/x509/https/tls.crt
+      - privkey:/etc/x509/https/tls.key
     env_file:
       ./keycloak.env
     ports:
@@ -46,3 +47,16 @@ services:
       - 8443:8443
     depends_on:
       - postgres
+  volumes:
+    fullchain:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem
+    privkey:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem
