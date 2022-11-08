@@ -18,7 +18,7 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - ./keys:/etc/letsencrypt:ro
+      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
       - 443:443
@@ -37,7 +37,7 @@ services:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
     volumes:
-      - ./keys:/etc/letsencrypt/live/bernadet.ddns.net
+      - /etc/letsencrypt:/etc/letsencrypt
     env_file:
       ./keycloak.env
     ports:
