@@ -18,7 +18,7 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - ./keys:/etc/letsencrypt/live/bernadet.ddns.net
+      - ./keys:/etc/letsencrypt:ro
     ports:
       - 80:80
       - 443:443
