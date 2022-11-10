@@ -37,7 +37,7 @@ services:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:Z
+      - /etc/letsencrypt:/etc/letsencrypt:z
     env_file:
       ./keycloak.env
     ports:
