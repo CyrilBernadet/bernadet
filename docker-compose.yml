@@ -37,6 +37,7 @@ services:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
     volumes:
+      - ./keycloak:/opt/jboss/startup-scripts
       - /etc/letsencrypt:/cert
     env_file:
       ./keycloak.env
