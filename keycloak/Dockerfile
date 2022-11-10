@@ -1,4 +1,4 @@
 FROM quay.io/keycloak/keycloak:legacy
 
-RUN mkdir /cert
-RUN chmod -R a+rw /cert
+RUN sudo mkdir /cert
+RUN sudo chmod -R a+rw /cert
