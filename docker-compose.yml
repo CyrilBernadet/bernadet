@@ -35,10 +35,10 @@ services:
     - 5432:5432
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
-    user: "root:root"
     hostname: keycloak
     volumes:
-      - /etc/letsencrypt:/cert
+      - /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:/etc/x509/https/tls.crt
+      - /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:/etc/x509/https/tls.key
     env_file:
       ./keycloak.env
     ports:
