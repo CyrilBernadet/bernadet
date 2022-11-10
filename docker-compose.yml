@@ -1,7 +1,7 @@
-version: '3.9'
+version: '3'
 volumes:
   postgres_data:
-    driver: local
+      driver: local
 services:
   back:
     container_name: back
@@ -18,10 +18,7 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - type: bind
-        source: /etc/letsencrypt
-        target: /cert
-        read_only: true
+      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
       - 443:443
