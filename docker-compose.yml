@@ -19,9 +19,9 @@ services:
     build: ./front
     volumes:
       - type: bind
-        source: '"/etc/letsencrypt"'
-        target: '"/cert"'
-        read_only: false
+        source: /etc/letsencrypt
+        target: /cert
+        read_only: true
     ports:
       - 80:80
       - 443:443
