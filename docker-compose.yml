@@ -19,7 +19,7 @@ services:
     build: ./front
     volumes:
       - /etc/letsencrypt/live/bernadet.ddns.net:/etc/letsencrypt/live/bernadet.ddns.net:ro
-      - /etc/letsencrypt/archive/bernadet.ddns.net:/etc/letsencrypt/archive/bernadet.ddns.net:ro
+      - /etc/letsencrypt/archive/bernadet\.ddns\.net:/etc/letsencrypt/archive/bernadet\.ddns\.net:ro
     ports:
       - 80:80
       - 443:443
