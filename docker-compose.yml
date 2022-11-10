@@ -35,9 +35,7 @@ services:
     - 5432:5432
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
-    build:
-      context: ./keycloak
-      dockerfile: Dockerfile
+    user: "${UID}:${GID}"
     hostname: keycloak
     volumes:
       - /etc/letsencrypt:/cert
