@@ -1,7 +1,11 @@
 version: '3'
 volumes:
   postgres_data:
-      driver: local
+    driver: local
+  letsencrypt:
+    type: bind
+    source: '"/etc/letsencrypt"'
+    read_only: false
 services:
   back:
     container_name: back
@@ -18,7 +22,7 @@ services:
     container_name: front
     build: ./front
     volumes:
-      - '"/etc/letsencrypt/archive/bernadet.ddns.net":"/cert":ro'
+      - letsencrypt:/cert
     ports:
       - 80:80
       - 443:443
