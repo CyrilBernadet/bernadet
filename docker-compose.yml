@@ -23,6 +23,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.spa-to-http.rule=Host(`bernadet.ddns.net`)"
       - "traefik.http.services.spa-to-http.loadbalancer.server.port=8080"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
     depends_on:
       - back
   postgres:
