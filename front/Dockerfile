@@ -1,9 +1,10 @@
-FROM node:alpine AS front-build
-WORKDIR /front
-COPY . .
-RUN npm ci && npm run build
+FROM node:16-alpine as builder
+WORKDIR /code/
+ADD package-lock.json .
+ADD package.json .
+RUN npm ci
+ADD . .
+RUN npm run build
 
-FROM nginx:1.15-alpine
-COPY --from=front-build front/dist/front /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/nginx.conf
-EXPOSE 4200
+FROM devforth/spa-to-http:latest
+COPY --from=builder /code/dist/ .
