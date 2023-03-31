@@ -1,7 +1,7 @@
 version: '3'
 volumes:
   postgres_data:
-      driver: local
+    driver: local
 services:
   back:
     container_name: back
@@ -19,11 +19,10 @@ services:
   front:
     container_name: front
     build: ./front
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
-      - 443:443
+    depends_on:
+      - back
   postgres:
     image: postgres
     hostname: postgres
@@ -38,13 +37,36 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
-    volumes:
-      - /etc/letsencrypt/live/bernadet.ddns.net/fullchain.pem:/etc/x509/https/tls.crt
-      - /etc/letsencrypt/live/bernadet.ddns.net/privkey.pem:/etc/x509/https/tls.key
     env_file:
       ./keycloak.env
     ports:
       - 8080:8080
-      - 8443:8443
     depends_on:
       - postgres
+  traefik:
+    image: "traefik:v2.9"
+    container_name: "traefik"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=cyril.bernadet@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`bernadet.ddns.net`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
