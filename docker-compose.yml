@@ -22,9 +22,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.spa-to-http.rule=Host(`serve-spa.localhost`)"
-      - "traefik.http.services.spa-to-http.loadbalancer.server.port=4200"
-    ports:
-      - 4200:4200
+      - "traefik.http.services.spa-to-http.loadbalancer.server.port=8080"
     depends_on:
       - back
   postgres:
@@ -62,7 +60,6 @@ services:
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
-      - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
