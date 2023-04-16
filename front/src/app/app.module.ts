@@ -34,12 +34,12 @@ import { initializeKeycloak } from './init/keycloak-init.factory';
     AppRoutingModule
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService],
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeKeycloak,
+    //   multi: true,
+    //   deps: [KeycloakService],
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: KeycloakBearerInterceptor,
