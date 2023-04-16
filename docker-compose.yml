@@ -27,7 +27,10 @@ services:
     build: ./front
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.front.rule=Host(`bernadet.ddns.net`)"
+      - "traefik.http.routers.front-secured.rule=Host(`bernadet.ddns.net`)"
+      - "traefik.http.routers.front-secured.entrypoints=websecure"
+      - "traefik.http.routers.front-secured.tls.certresolver=mytlschallenge" 
+      - "traefik.http.routers.front-secured.service=front"
       - "traefik.http.services.front.loadbalancer.server.port=8080"
     expose:
       - 8080
@@ -68,15 +71,19 @@ services:
   traefik:
     image: "traefik:v2.9"
     container_name: "traefik"
+    restart: unless-stopped
     command:
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.myresolver.acme.email=cyril.bernadet@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+       - --api.dashboard=true
+       - --providers.docker=true
+       - --providers.docker.exposedbydefault=false
+       - --providers.docker.network=bernadet-network
+       - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
+       - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+       - --entrypoints.web.address=:80
+       - --entrypoints.web.http.redirections.entryPoint.to=websecure
+       - --entrypoints.web.http.redirections.entryPoint.scheme=https
+       - --entrypoints.web.http.redirections.entrypoint.permanent=true
+       - --entrypoints.websecure.address=:443
     ports:
       - "80:80"
       - "443:443"
