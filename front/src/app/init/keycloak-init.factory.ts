@@ -5,16 +5,16 @@ export function initializeKeycloak(
   keycloak: KeycloakService
   ) {
     return () =>
-      keycloak.init({
-        config: {
-          url: environment.keycloak.authUrl,
-          realm: environment.keycloak.realm,
-          clientId: environment.keycloak.client
-        },
-        initOptions: {
-          onLoad: 'check-sso',
-          silentCheckSsoRedirectUri:
-            window.location.origin + '/assets/silent-check-sso.html'
-        }
-      });
+      // keycloak.init({
+      //   config: {
+      //     url: environment.keycloak.authUrl,
+      //     realm: environment.keycloak.realm,
+      //     clientId: environment.keycloak.client
+      //   },
+      //   initOptions: {
+      //     onLoad: 'check-sso',
+      //     silentCheckSsoRedirectUri:
+      //       window.location.origin + '/assets/silent-check-sso.html'
+      //   }
+      // });
 }
