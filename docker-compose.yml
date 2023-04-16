@@ -57,12 +57,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
-      - "traefik.http.routers.keycloak.entrypoints=web"
-      - "traefik.http.routers.keycloak.middlewares=redirect-middleware"
+      - "traefik.http.routers.keycloak-secured.entrypoints=websecure"
+      - "traefik.http.routers.keycloak-secured.tls.certresolver=mytlschallenge" 
+      - "traefik.http.routers.keycloak-secured.service=front"
     env_file:
       ./keycloak.env    
     expose:
-      - 8080
+      - 8443
       - 9990
     depends_on:
       - postgres
