@@ -41,10 +41,19 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=PathPrefix(`/auth`)"
+      - traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https
+      - traefik.http.routers.web.entrypoints=web
+      - traefik.http.routers.web.middlewares=redirect-middleware
+      - "traefik.http.routers.websecure.rule=PathPrefix(`/auth`)"
+      - traefik.http.routers.websecure.entrypoints=websecure
+      - traefik.http.routers.websecure.tls=true
     env_file:
       ./keycloak.env
     ports:
-      - 8443:8443
+      - 18080:8080
     depends_on:
       - postgres
   traefik:
