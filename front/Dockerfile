@@ -7,4 +7,4 @@ ADD . .
 RUN npm run build
 
 FROM devforth/spa-to-http:latest
-COPY --from=builder /code/dist/ .
+COPY --from=builder /code/dist/front/ .
