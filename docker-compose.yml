@@ -28,8 +28,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.front.rule=Host(`bernadet.ddns.net`)"
-      - "traefik.http.routers.front.entrypoints=websecure"
-      - "traefik.http.routers.front.tls.certresolver=myresolver"
+      - "traefik.http.services.front.loadbalancer.server.port=8080"
     expose:
       - 8080
     depends_on:
@@ -57,12 +56,10 @@ services:
       - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
       - "traefik.http.routers.keycloak.entrypoints=web"
       - "traefik.http.routers.keycloak.middlewares=redirect-middleware"
-      - "traefik.http.routers.keycloak-secured.rule=PathPrefix(`/auth`)"
-      - "traefik.http.routers.keycloak-secured.entrypoints=websecure"
-      - "traefik.http.routers.keycloak-secured.tls=true"
     env_file:
       ./keycloak.env    
     expose:
+      - 8080
       - 9990
     depends_on:
       - postgres
