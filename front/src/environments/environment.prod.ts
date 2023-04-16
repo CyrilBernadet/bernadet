@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://backend:8081/api',
+  apiUrl: 'https://bernadet.ddns.net/api',
   keycloak: {
-    authUrl: 'https://keycloak:8443/auth',
+    authUrl: 'https://bernadet.ddns.net/auth',
     realm: 'Bernadet',
     client: 'front'
   }

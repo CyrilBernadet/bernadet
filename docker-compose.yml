@@ -9,6 +9,10 @@ services:
     build: ./back
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.employee-backend.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.employee-backend.entrypoints=web"
     ports:
       - '8081:8081'
     env_file:
@@ -16,6 +20,8 @@ services:
     depends_on:
       - postgres
       - keycloak
+    networks:
+    - k-network
   front:
     container_name: front
     build: ./front
@@ -27,6 +33,8 @@ services:
       - "traefik.http.services.front.loadbalancer.server.port=8080"
     depends_on:
       - back
+    networks:
+    - k-network
   postgres:
     image: postgres
     hostname: postgres
@@ -38,6 +46,8 @@ services:
       POSTGRES_PASSWORD: password
     ports:
     - 5432:5432
+    networks:
+    - k-network
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
@@ -56,6 +66,8 @@ services:
       - 9990:9990
     depends_on:
       - postgres
+    networks:
+    - k-network
   traefik:
     image: "traefik:v2.9"
     container_name: "traefik"
@@ -63,13 +75,19 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
       - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.myresolver.acme.email=cyril.bernadet@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
+      - "80:80"
       - "443:443"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+    - k-network
+networks:
+  k-network:
