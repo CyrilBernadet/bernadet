@@ -55,16 +55,13 @@ services:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
-      - "traefik.http.routers.keycloak.entrypoints=web"
-      - "traefik.http.routers.keycloak.middlewares=redirect-middleware"
-      - "traefik.http.routers.keycloak-secured.rule=PathPrefix(`/auth`)"
-      - "traefik.http.routers.keycloak-secured.entrypoints=websecure"
-      - "traefik.http.routers.keycloak-secured.tls=true"
+      - "traefik.http.routers.cloud-network-keycloak.rule=Host(`bernadet.ddns.net`) && PathPrefix(`/auth`)"
+      - "traefik.http.routers.cloud-network-keycloak.entrypoints=websecure"
+      - "traefik.http.routers.cloud-network-keycloak.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.cloud-network-keycloak.tls=true"
+      - "traefik.http.services.cloud-network-keycloak.loadbalancer.server.port=8080"
     environment:
-      PROXY_ADDRESS_FORWARDING: "true"
+      KC_PROXY_ADDRESS_FORWARDING: "true"
       KC_HTTP_RELATIVE_PATH: "/auth"
       KC_PROXY: edge
       KC_HOSTNAME_STRICT: "false"
@@ -73,9 +70,7 @@ services:
       KC_HEALTH_ENABLED: "true"
       KC_METRICS_ENABLED: "true"
     env_file:
-      ./keycloak.env    
-    expose:
-      - 8443
+      ./keycloak.env
     depends_on:
       - postgres
     networks:
