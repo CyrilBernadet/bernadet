@@ -56,11 +56,22 @@ services:
     hostname: keycloak
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
+      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.keycloak.entrypoints=web"
+      - "traefik.http.routers.keycloak.middlewares=redirect-middleware"
       - "traefik.http.routers.keycloak-secured.rule=PathPrefix(`/auth`)"
       - "traefik.http.routers.keycloak-secured.entrypoints=websecure"
-      - "traefik.http.routers.keycloak-secured.tls.certresolver=mytlschallenge" 
-      - "traefik.http.routers.keycloak-secured.service=front"
-      - "traefik.http.services.keycloak-secured.loadbalancer.server.port=8443"
+      - "traefik.http.routers.keycloak-secured.tls=true"
+    environment:
+      PROXY_ADDRESS_FORWARDING: "true"
+      KC_HTTP_RELATIVE_PATH: "/auth"
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: "false"
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
     env_file:
       ./keycloak.env    
     expose:
