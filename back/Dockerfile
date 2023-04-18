@@ -2,9 +2,7 @@ FROM openjdk:18
 EXPOSE 8081
 
 COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
- 
+COPY mvnw pom.xml ./ 
 COPY src ./src
  
 CMD ["./mvnw", "spring-boot:run"]

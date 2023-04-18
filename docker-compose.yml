@@ -27,10 +27,10 @@ services:
     build: ./front
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.front-secured.rule=Host(`bernadet.ddns.net`)"
-      - "traefik.http.routers.front-secured.entrypoints=websecure"
-      - "traefik.http.routers.front-secured.tls.certresolver=mytlschallenge" 
-      - "traefik.http.routers.front-secured.service=front"
+      - "traefik.http.routers.front.rule=Host(`localhost`)"
+      - "traefik.http.routers.front.entrypoints=websecure"
+      - "traefik.http.routers.front.tls.certresolver=mytlschallenge" 
+      - "traefik.http.routers.front.service=front"
       - "traefik.http.services.front.loadbalancer.server.port=8080"
     expose:
       - 8080
@@ -55,11 +55,12 @@ services:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
     labels:
-      - "traefik.http.routers.cloud-network-keycloak.rule=Host(`bernadet.ddns.net`) && PathPrefix(`/auth`)"
-      - "traefik.http.routers.cloud-network-keycloak.entrypoints=websecure"
-      - "traefik.http.routers.cloud-network-keycloak.tls.certresolver=mytlschallenge"
-      - "traefik.http.routers.cloud-network-keycloak.tls=true"
-      - "traefik.http.services.cloud-network-keycloak.loadbalancer.server.port=8080"
+      - "traefik.enable=true"
+      - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
+      - "traefik.http.routers.keycloak.entrypoints=websecure"
+      - "traefik.http.routers.keycloak.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.keycloak.tls=true"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
     environment:
       KC_PROXY_ADDRESS_FORWARDING: "true"
       KC_HTTP_RELATIVE_PATH: "/auth"
@@ -69,6 +70,9 @@ services:
       KC_HOSTNAME_STRICT_HTTPS: "false"
       KC_HEALTH_ENABLED: "true"
       KC_METRICS_ENABLED: "true"
+    expose:
+      - 8080
+      - 8443
     env_file:
       ./keycloak.env
     depends_on:
