@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8081/api',
+  apiUrl: 'http://localhost/api',
   keycloak: {
-    authUrl: 'http://localhost:8080/auth',
+    authUrl: 'http://localhost/auth',
     realm: 'Bernadet',
     client: 'front'
   }

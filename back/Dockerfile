@@ -1,5 +1,5 @@
 FROM openjdk:18
-EXPOSE 8081
+EXPOSE 8080
 
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./ 

@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=web"
     expose:
-      - 8081
+      - 8080
     env_file:
       ./backend.env
     depends_on:
@@ -34,10 +34,10 @@ services:
       - "traefik.http.services.front.loadbalancer.server.port=8080"
     expose:
       - 8080
-    depends_on:
-      - back
     networks:
     - bernadet-network
+    depends_on:
+      - back
   postgres:
     image: postgres
     hostname: postgres
@@ -47,8 +47,6 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
-    ports:
-    - 5432:5432
     networks:
     - bernadet-network
   keycloak:
@@ -70,38 +68,35 @@ services:
       KC_HOSTNAME_STRICT_HTTPS: "false"
       KC_HEALTH_ENABLED: "true"
       KC_METRICS_ENABLED: "true"
-    expose:
-      - 8080
-      - 8443
     env_file:
       ./keycloak.env
     depends_on:
       - postgres
     networks:
     - bernadet-network
-  traefik:
-    image: "traefik:v2.9"
-    container_name: "traefik"
-    restart: unless-stopped
-    command:
-       - --api.dashboard=true
-       - --providers.docker=true
-       - --providers.docker.exposedbydefault=false
-       - --providers.docker.network=bernadet-network
-       - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
-       - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
-       - --entrypoints.web.address=:80
-       - --entrypoints.web.http.redirections.entryPoint.to=websecure
-       - --entrypoints.web.http.redirections.entryPoint.scheme=https
-       - --entrypoints.web.http.redirections.entrypoint.permanent=true
-       - --entrypoints.websecure.address=:443
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "./letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    networks:
-    - bernadet-network
+  # traefik:
+  #   image: "traefik:v2.9"
+  #   container_name: "traefik"
+  #   restart: unless-stopped
+  #   command:
+  #      - --api.dashboard=true
+  #      - --providers.docker=true
+  #      - --providers.docker.exposedbydefault=false
+  #      - --providers.docker.network=bernadet-network
+  #      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
+  #      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+  #      - --entrypoints.web.address=:80
+  #      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+  #      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+  #      - --entrypoints.web.http.redirections.entrypoint.permanent=true
+  #      - --entrypoints.websecure.address=:443
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - "./letsencrypt:/letsencrypt"
+  #     - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  #   networks:
+  #   - bernadet-network
 networks:
   bernadet-network:
