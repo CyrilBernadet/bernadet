@@ -50,7 +50,7 @@ services:
     networks:
       - bernadet-network
   keycloak:
-    image: quay.io/keycloak/keycloak:legacy
+    image: quay.io/keycloak/keycloak:latest
     hostname: keycloak
     command: start --auto-build
     labels:
