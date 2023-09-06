@@ -52,6 +52,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
+    command: start --auto-build
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
