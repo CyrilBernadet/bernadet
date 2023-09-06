@@ -50,9 +50,9 @@ services:
     networks:
       - bernadet-network
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak
     hostname: keycloak
-    command: start --auto-build
+    command: start
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
