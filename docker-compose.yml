@@ -35,7 +35,7 @@ services:
     expose:
       - 8080
     networks:
-    - bernadet-network
+      - bernadet-network
     depends_on:
       - back
   postgres:
@@ -48,7 +48,7 @@ services:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
     networks:
-    - bernadet-network
+      - bernadet-network
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     hostname: keycloak
@@ -73,7 +73,7 @@ services:
     depends_on:
       - postgres
     networks:
-    - bernadet-network
+      - bernadet-network
   # traefik:
   #   image: "traefik:v2.9"
   #   container_name: "traefik"
