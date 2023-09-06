@@ -52,7 +52,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak
     hostname: keycloak
-    command: start
+    command: start --optimized
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
