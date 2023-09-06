@@ -47,6 +47,8 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
+    expose:
+      - 5432
     networks:
       - bernadet-network
   keycloak:
